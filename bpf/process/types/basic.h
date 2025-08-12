@@ -191,6 +191,7 @@ struct event_config {
 	__s32 idx[EVENT_CONFIG_MAX_ARG];
 	__u32 syscall;
 	__s32 argreturncopy;
+	__u32 argreturncopysize;
 	__s32 argreturn;
 	/* arg return action specifies to act on the return value; currently
 	 * supported actions include: TrackSock and UntrackSock.
@@ -202,7 +203,6 @@ struct event_config {
 	 */
 	__u32 policy_id;
 	__u32 flags;
-	__u32 pad;
 	struct config_btf_arg btf_arg[EVENT_CONFIG_MAX_ARG][MAX_BTF_ARG_DEPTH];
 	struct config_usdt_arg usdt_arg[EVENT_CONFIG_MAX_ARG];
 } __attribute__((packed));

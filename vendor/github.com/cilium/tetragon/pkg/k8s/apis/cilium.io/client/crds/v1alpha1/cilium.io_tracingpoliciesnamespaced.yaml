@@ -152,6 +152,12 @@ spec:
                               is triggered at the entrance of the function. For example, a buffer
                               supplied to read(2) won't have content until kretprobe is triggered.
                             type: boolean
+                          returnCopySize:
+                            description: |-
+                              Specifies the size of the buffer to be copied.
+                              This field is used only for char_buf and char_iovec types.
+                            format: int32
+                            type: integer
                           sizeArgIndex:
                             description: |-
                               Specifies the position of the corresponding size argument for this argument.
@@ -264,6 +270,12 @@ spec:
                             is triggered at the entrance of the function. For example, a buffer
                             supplied to read(2) won't have content until kretprobe is triggered.
                           type: boolean
+                        returnCopySize:
+                          description: |-
+                            Specifies the size of the buffer to be copied.
+                            This field is used only for char_buf and char_iovec types.
+                          format: int32
+                          type: integer
                         sizeArgIndex:
                           description: |-
                             Specifies the position of the corresponding size argument for this argument.
@@ -908,6 +920,12 @@ spec:
                               is triggered at the entrance of the function. For example, a buffer
                               supplied to read(2) won't have content until kretprobe is triggered.
                             type: boolean
+                          returnCopySize:
+                            description: |-
+                              Specifies the size of the buffer to be copied.
+                              This field is used only for char_buf and char_iovec types.
+                            format: int32
+                            type: integer
                           sizeArgIndex:
                             description: |-
                               Specifies the position of the corresponding size argument for this argument.
@@ -1589,6 +1607,12 @@ spec:
                               is triggered at the entrance of the function. For example, a buffer
                               supplied to read(2) won't have content until kretprobe is triggered.
                             type: boolean
+                          returnCopySize:
+                            description: |-
+                              Specifies the size of the buffer to be copied.
+                              This field is used only for char_buf and char_iovec types.
+                            format: int32
+                            type: integer
                           sizeArgIndex:
                             description: |-
                               Specifies the position of the corresponding size argument for this argument.
@@ -2208,6 +2232,12 @@ spec:
                               is triggered at the entrance of the function. For example, a buffer
                               supplied to read(2) won't have content until kretprobe is triggered.
                             type: boolean
+                          returnCopySize:
+                            description: |-
+                              Specifies the size of the buffer to be copied.
+                              This field is used only for char_buf and char_iovec types.
+                            format: int32
+                            type: integer
                           sizeArgIndex:
                             description: |-
                               Specifies the position of the corresponding size argument for this argument.
@@ -2837,6 +2867,12 @@ spec:
                               is triggered at the entrance of the function. For example, a buffer
                               supplied to read(2) won't have content until kretprobe is triggered.
                             type: boolean
+                          returnCopySize:
+                            description: |-
+                              Specifies the size of the buffer to be copied.
+                              This field is used only for char_buf and char_iovec types.
+                            format: int32
+                            type: integer
                           sizeArgIndex:
                             description: |-
                               Specifies the position of the corresponding size argument for this argument.

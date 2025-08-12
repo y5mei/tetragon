@@ -855,6 +855,7 @@ func addKprobe(funcName string, instance int, f *v1alpha1.KProbeSpec, in *addKpr
 
 		argType := gt.GenericTypeFromString(argRetprobe.Type)
 		eventConfig.ArgReturnCopy = int32(argType)
+		eventConfig.ArgReturnCopySize = argRetprobe.ReturnCopySize
 
 		argP := argPrinter{index: int(argRetprobe.Index), ty: argType, label: argRetprobe.Label}
 		argReturnPrinters = append(argReturnPrinters, argP)

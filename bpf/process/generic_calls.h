@@ -110,17 +110,20 @@ copy_char_buf(void *ctx, long off, unsigned long arg, int argm,
 	      struct msg_generic_kprobe *e)
 {
 	int *s = (int *)args_off(e, off);
-	unsigned long meta;
 	size_t bytes = 0;
 
 	if (has_return_copy(argm)) {
 		u64 retid = retprobe_map_get_key(ctx);
+		__u64 size_from_arg = 0;
 
-		retprobe_map_set(e->func_id, retid, e->common.ktime, arg);
+		if ((argm & ARGM_INDEX_MASK) > 0) {
+			size_from_arg = get_arg_meta(argm, e);
+		}
+
+		retprobe_map_set_iovec(e->func_id, retid, e->common.ktime, arg, size_from_arg);
 		return return_error(s, char_buf_saved_for_retprobe);
 	}
-	meta = get_arg_meta(argm, e);
-	probe_read(&bytes, sizeof(bytes), &meta);
+	bytes = get_arg_meta(argm, e);
 	return __copy_char_buf(ctx, off, arg, bytes, has_max_data(argm), e);
 }
 
@@ -1036,9 +1039,21 @@ FUNC_INLINE int generic_retkprobe(void *ctx, struct bpf_map_def *calls, unsigned
 		     : [size] "+r"(size));
 
 	switch (do_copy) {
-	case char_buf:
-		size += __copy_char_buf(ctx, size, info.ptr, ret, false, e);
+	case char_buf: {
+		__u64 copy_size = 0;
+		if (info.cnt > 0) {
+			/* size was stored from sizeArgIndex on entry */
+			copy_size = info.cnt;
+		} else if (config->argreturncopysize > 0) {
+			/* fallback to fixed size from returnCopySize */
+			copy_size = config->argreturncopysize;
+		} else {
+			/* final fallback to function return value */
+			copy_size = ret;
+		}
+		size += __copy_char_buf(ctx, size, info.ptr, copy_size, false, e);
 		break;
+	}
 	case char_iovec:
 		size += __copy_char_iovec(size, info.ptr, info.cnt, ret, e);
 	default:

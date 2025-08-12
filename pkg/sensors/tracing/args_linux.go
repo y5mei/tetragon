@@ -31,8 +31,9 @@ type argPrinter struct {
 }
 
 const (
-	argReturnCopyBit = 1 << 4
-	argMaxDataBit    = 1 << 5
+	argReturnCopyBit     = 1 << 4
+	argMaxDataBit        = 1 << 5
+	argReturnCopySizeBit = 1 << 6
 )
 
 func argReturnCopy(meta int) bool {
@@ -45,6 +46,7 @@ func argReturnCopy(meta int) bool {
 //	0-3 : SizeArgIndex
 //	  4 : ReturnCopy
 //	  5 : MaxData
+//	  6 : ReturnCopySize
 func getMetaValue(arg *v1alpha1.KProbeArg) (int, error) {
 	var meta int
 
@@ -53,6 +55,9 @@ func getMetaValue(arg *v1alpha1.KProbeArg) (int, error) {
 			return 0, fmt.Errorf("invalid SizeArgIndex value (>15): %v", arg.SizeArgIndex)
 		}
 		meta = int(arg.SizeArgIndex)
+	}
+	if arg.ReturnCopySize > 0 {
+		meta = meta | argReturnCopySizeBit
 	}
 	if arg.ReturnCopy {
 		meta = meta | argReturnCopyBit
