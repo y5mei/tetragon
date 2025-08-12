@@ -66,6 +66,7 @@ const (
 	GenericSocketType   = 41
 
 	GenericDentryType = 42
+	GenericPipeFds    = 43
 
 	GenericNopType     = -1
 	GenericInvalidType = -2
@@ -126,6 +127,7 @@ var GenericStringToType = map[string]int{
 	"sockaddr":        GenericSockaddrType,
 	"socket":          GenericSocketType,
 	"dentry":          GenericDentryType,
+	"pipe_fds":        GenericPipeFds,
 }
 
 var GenericTypeToStringTable = map[int]string{
@@ -170,6 +172,8 @@ var GenericTypeToStringTable = map[int]string{
 	GenericNetDev:          "net_device",
 	GenericSockaddrType:    "sockaddr",
 	GenericSocketType:      "socket",
+	GenericDentryType:      "dentry",
+	GenericPipeFds:         "pipe_fds",
 	GenericInvalidType:     "",
 }
 
