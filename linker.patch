@@ -1,0 +1,20 @@
+# This patch omits errors when loading BTF from kernel modules (b/448390877).
+# See diff: https://diff.googleplex.com/#key=IlAEesFQefV7
+diff --git a/vendor/github.com/cilium/ebpf/linker.go b/vendor/github.com/cilium/ebpf/linker.go
+index 0b966477f..c2b4c22d9 100644
+--- a/vendor/github.com/cilium/ebpf/linker.go
++++ b/vendor/github.com/cilium/ebpf/linker.go
+@@ -161,10 +161,10 @@ func applyRelocations(insns asm.Instructions, bo binary.ByteOrder, b *btf.Builde
+ 	for _, kmod := range modules {
+ 		spec, err := c.Module(kmod)
+ 		if err != nil {
+-			return fmt.Errorf("load BTF for kmod %s: %w", kmod, err)
++			fmt.Printf("Warning (vendor/github.com/cilium/ebpf/linker.go): load BTF for kmod %s: %v\n", kmod, err)
++		}else{
++			targets = append(targets, spec)
+ 		}
+-
+-		targets = append(targets, spec)
+ 	}
+
+ 	fixups, err := btf.CORERelocate(relos, targets, bo, b.Add)
